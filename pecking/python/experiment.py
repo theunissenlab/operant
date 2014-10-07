@@ -1,19 +1,18 @@
-from pecking.core.base import BaseOperant
+from pecking.base import BaseOperant
 
 
 class Experiment(BaseOperant):
-    children = ["sessions"]
+    children = "sessions"
 
     num_sessions = property(fget=lambda x: len(x.sessions))
 
-    def __init__(self):
+    def __init__(self, start, end, weight=None):
 
         self.sessions = list()
-        self.annotations = dict()
         self.bird = None
-        self.start = None
-        self.end = None
-        self.weight = None
+        self.start = start
+        self.end = end
+        self.weight = weight
 
     def summary(self):
 

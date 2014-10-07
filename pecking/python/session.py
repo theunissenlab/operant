@@ -1,27 +1,26 @@
-from pecking.core.base import BaseOperant
+from pecking.base import BaseOperant
 
 
 class Session(BaseOperant):
 
-    children = ["blocks"]
+    children = "blocks"
     num_blocks = property(fget=lambda self: len(self.blocks))
 
-    def __init__(self):
+    def __init__(self, date, start=None, end=None, weight=None, post_weight=None, box=None):
 
         self.blocks = list()
-        self.annotations = dict()
-        self.time = None
-        self.date = None
-        self.duration = None
+        self.date = date
+        self.start = start
+        self.end = end
+        self.weight = weight
+        self.box = box
+        self.post_weight = post_weight
         self.experiment = None
-        self.weight = None
-        self.box = None
-        self.post_weight = None
 
     def summary(self):
 
         columns = ["Date", "Time", "Weight", "Box", "Total Pecks", "Significant blocks"]
-        values = [self.date, self.time, self.weight, self.box, self.total_pecks, self.significant_blocks]
+        values = [self.date, self.start, self.weight, self.box, self.total_pecks, self.significant_blocks]
 
         return columns, values
 
@@ -30,7 +29,7 @@ class Session(BaseOperant):
 
         total_pecks = 0
         for blk in self.blocks:
-            total_pecks += blk.pecks
+            total_pecks += blk.total_pecks
 
         return total_pecks
 
