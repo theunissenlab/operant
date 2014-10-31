@@ -14,7 +14,7 @@ class Block(BaseOperant):
     percent_interrupt = property(fget=lambda self: [self.no_reward_interrupts / self.total_no_reward,
                                                     self.reward_interrupts / self.total_reward])
 
-    def __init__(self, filename, time, duration, first_peck=None):
+    def __init__(self, name=None, time=None, duration=None, first_peck=None):
 
         self.stimuli = list()
         self.filename = filename
