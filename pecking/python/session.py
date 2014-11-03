@@ -6,21 +6,36 @@ class Session(BaseOperant):
     children = "blocks"
     num_blocks = property(fget=lambda self: len(self.blocks))
 
-    def __init__(self, date, start=None, end=None, weight=None, post_weight=None, box=None):
+    def __init__(self, name=None,
+                 start=None, end=None,
+                 weight=None, post_weight=None,
+                 box=None, seed_given=None,
+                 notes=None, labels=None):
 
+        self.name = name
         self.blocks = list()
-        self.date = date
         self.start = start
         self.end = end
         self.weight = weight
         self.box = box
         self.post_weight = post_weight
+        self.seed_given = seed_given
+        self.notes = notes
+        self.labels = labels
         self.experiment = None
 
     def summary(self):
 
-        columns = ["Date", "Time", "Weight", "Box", "Total Pecks", "Significant blocks"]
-        values = [self.date, self.start, self.weight, self.box, self.total_pecks, self.significant_blocks]
+        columns = ["Start", "Initial Weight", "Final Weight",
+                   "Stimulus Label", "Total Pecks", "# Blocks",
+                   "Significant blocks"]
+        values = [self.start.strftime("%m/%d/%y %H:%M:%S"),
+                  self.weight,
+                  self.post_weight,
+                  self.labels,
+                  self.total_pecks,
+                  self.num_blocks,
+                  self.significant_blocks]
 
         return columns, values
 
@@ -42,3 +57,10 @@ class Session(BaseOperant):
                 significant_blocks += 1
 
         return significant_blocks
+
+    @property
+    def weight_loss(self):
+
+        if self.experiment is not None:
+            if (self.weight is not None) and (self.experiment.weight is not None):
+                return 100 * (1 - float(self.weight) / float(self.experiment.weight))

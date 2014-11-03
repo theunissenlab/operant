@@ -17,3 +17,16 @@ class BaseOperant(object):
             if len(value_list):
                 return pd.DataFrame(value_list, columns=columns)
 
+    def summarize(self, objs=list()):
+
+        if len(objs):
+            value_list = list()
+            for obj in objs:
+                columns, values = obj.summary()
+                value_list.append(values)
+            if len(value_list):
+                return pd.DataFrame(value_list, columns=columns)
+
+        else:
+            columns, values = self.summary()
+            return pd.DataFrame([values], columns=columns)

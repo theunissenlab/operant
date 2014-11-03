@@ -164,7 +164,7 @@ if __name__ == "__main__":
                         print("Could not find block data for %s" % fname)
 
                 if sess.num_blocks > 0:
-                    sess.experiment = exp
+                    sess.experiment = e
                     e.sessions.append(sess)
                 else:
                     print("No blocks in session")

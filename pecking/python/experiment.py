@@ -6,18 +6,29 @@ class Experiment(BaseOperant):
 
     num_sessions = property(fget=lambda x: len(x.sessions))
 
-    def __init__(self, start, end, weight=None):
+    def __init__(self, name= None, start=None, end=None, weight=None, fast_start=None):
 
         self.sessions = list()
         self.bird = None
+        self.name = name
         self.start = start
         self.end = end
+        self.fast_start = fast_start
         self.weight = weight
 
     def summary(self):
 
-        columns = ["Start", "End", "Weight", "Sessions", "Blocks", "Total Pecks", "Signficant Blocks"]
-        values = [self.start, self.end, self.weight, self.num_sessions, self.num_blocks, self.total_pecks,
+        columns = ["Start", "End", "Weight", "Sessions", "Blocks",
+                   "Avg. Pecks", "Signficant Blocks"]
+        if self.end is not None:
+            end = self.end.strftime("%m/%d/%y")
+        else:
+            end = None
+        values = [self.start.strftime("%m/%d/%y"),
+                  end,
+                  self.weight,
+                  self.num_sessions, self.num_blocks,
+                  self.total_pecks / float(self.num_blocks),
                   self.significant_blocks]
 
         return columns, values

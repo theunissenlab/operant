@@ -7,15 +7,17 @@ class Bird(BaseOperant):
     children = "experiments"
     num_experiments = property(fget=lambda self: len(self.experiments))
 
-    def __init__(self, name):
+    def __init__(self, name=None):
 
         self.name = name
         self.experiments = list()
 
     def summary(self):
 
-        columns = ["Name", "Experiments", "Avg Pecks Per Block", "% Significant Blocks"]
-        values = [self.name, self.num_experiments, self.pecks_per_block, self.significant_blocks]
+        columns = ["Name", "Experiments",
+                   "Avg. Pecks", "% Significant Blocks"]
+        values = [self.name, self.num_experiments,
+                  self.pecks_per_block, self.significant_blocks]
 
         return columns, values
 
