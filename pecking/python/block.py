@@ -101,7 +101,7 @@ class Block(BaseOperant):
         if "Interrupts" in self.data:
             return
 
-        time_diff = np.hstack([0, np.diff([ind.value for ind in self.data.index])]) / 10**9
+        time_diff = np.hstack([np.diff([ind.value for ind in self.data.index]), 0]) / 10**9
         inds = (time_diff > 0.19) & (time_diff < 6) # This value should be based on the stimulus duration
 
         self.data["Interrupts"] = inds

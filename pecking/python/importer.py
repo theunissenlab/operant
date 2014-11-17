@@ -63,6 +63,8 @@ class MatlabTxt(Importer):
             if "timestamp" in file_types:
                 fname = files[file_types.index("timestamp")]
                 blk.data = self.get_block_data(fname, start=blk.start)
+                if (blk.data is None) or (len(blk.data) <= 1):
+                    continue
                 blk.compute_statistics()
 
             blk.files = files
