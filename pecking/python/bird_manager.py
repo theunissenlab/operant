@@ -107,6 +107,7 @@ class BirdManager(object):
                     sess.post_weight = df["Final Weight"]
                     sess.notes = df["Notes"]
                     sess.labels = df["Stimulus Labels"]
+                    sess.seed_given = df["Seed Amount"]
 
             session_list.append(sess)
 
@@ -198,7 +199,7 @@ class BirdStore(object):
 if __name__ == "__main__":
 
     from pecking.bird_manager import *
-    directory = "/Users/tylerlee/Dropbox/pecking_test"
+    directory = "/auto/fhome/tlee/Dropbox/pecking_test"
     session_csv = os.path.join(directory, "Pecking data - Session Data.csv")
     fasting_csv = os.path.join(directory, "Pecking data - Fasting Data.csv")
     bm = BirdManager("/tmp/test", fasting_csv, session_csv)

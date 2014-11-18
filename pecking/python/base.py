@@ -17,7 +17,8 @@ class BaseOperant(object):
             if len(value_list):
                 return pd.DataFrame(value_list, columns=columns)
 
-    def summarize(self, objs=list()):
+    @staticmethod
+    def summarize(objs):
 
         if len(objs):
             value_list = list()
@@ -28,5 +29,5 @@ class BaseOperant(object):
                 return pd.DataFrame(value_list, columns=columns)
 
         else:
-            columns, values = self.summary()
+            columns, values = objs.summary()
             return pd.DataFrame([values], columns=columns)

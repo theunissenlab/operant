@@ -59,3 +59,53 @@ class Experiment(BaseOperant):
             significant_blocks += session.significant_blocks
 
         return significant_blocks
+
+    def show_weight(self, show_plot=True):
+
+        weights = dict()
+        if self.weight is not None:
+            weights.setdefault("Time", list()).append(self.fast_start)
+            weights.setdefault("Weight", list()).append(self.weight)
+            weights.setdefault("Label", list()).append("Fast start")
+            weights.setdefault("Pecks", list()).append(None)
+            weights.setdefault("Num Reward", list()).append(None)
+            weights.setdefault("Food Given", list()).append(None)
+
+        for sess in self.sessions:
+            if sess.start is not None:
+                weights.setdefault("Time", list()).append(sess.start)
+                weights.setdefault("Weight", list()).append(sess.weight)
+                weights.setdefault("Label", list()).append("Session start")
+                weights.setdefault("Pecks", list()).append(None)
+                weights.setdefault("Num Reward", list()).append(None)
+                weights.setdefault("Food Given", list()).append(None)
+
+            if sess.end is not None:
+                weights.setdefault("Time", list()).append(sess.end)
+                weights.setdefault("Weight", list()).append(sess.post_weight)
+                weights.setdefault("Label", list()).append("Session end")
+                weights.setdefault("Pecks", list()).append(sess.total_pecks)
+                weights.setdefault("Num Reward", list()).append(sess.total_reward)
+                weights.setdefault("Food Given", list()).append(sess.seed_given)
+
+        return weights
+
+        index = weights.pop("Time")
+        df = pd.DataFrame(weights, index=index)
+        df["Weight"][df["Weight"] == 0] = None
+        if show_plot:
+            ts = df["Weight"]
+            ts.index = df.index.format(formatter=lambda x: x.strftime("%m/%d"))
+            ax = ts.plot(rot=0)
+            ax.set_xticks(range(len(ts)))
+            ax.set_xticklabels(ts.index)
+            ax.set_ylabel("Weight")
+            ax.set_xlabel("Date")
+
+            ax2 = ax.twinx()
+            ts = df["Pecks"][~np.isnan(df["Pecks"])]
+            ts.index = df.index.format(formatter=lambda x: x.strftime("%m/%d"))
+            ts.plot(rot=0, ax=ax2)
+
+
+        return df

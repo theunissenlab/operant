@@ -59,6 +59,18 @@ class Session(BaseOperant):
         return significant_blocks
 
     @property
+    def total_reward(self):
+
+        total_reward = 0
+        for blk in self.blocks:
+            try:
+                total_reward += blk.total_reward
+            except AttributeError:
+                continue
+
+        return total_reward
+
+    @property
     def weight_loss(self):
 
         if self.experiment is not None:

@@ -10,7 +10,8 @@ from pecking.block import Block
 
 bird_dict = {"BlaBlu1387F": "BlaLbu1387F",
              "GraGre1401M": "GraGre4401M",
-             "BlaYel0208": "BlaYel0208M"}
+             "BlaYel0208": "BlaYel0208M",
+             "WhiXXX4100F": "WhiRas4100F"}
 
 class Importer(object):
 
