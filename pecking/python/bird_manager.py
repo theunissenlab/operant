@@ -159,6 +159,7 @@ class BirdManager(object):
 
         return bird_dict.values()
 
+
     def get_bird(self, bird_name):
 
         pass
@@ -199,7 +200,7 @@ class BirdStore(object):
 if __name__ == "__main__":
 
     from pecking.bird_manager import *
-    directory = "/auto/fhome/tlee/Dropbox/pecking_test"
+    directory = "/Users/tylerlee/Dropbox/pecking_test"
     session_csv = os.path.join(directory, "Pecking data - Session Data.csv")
     fasting_csv = os.path.join(directory, "Pecking data - Fasting Data.csv")
     bm = BirdManager("/tmp/test", fasting_csv, session_csv)

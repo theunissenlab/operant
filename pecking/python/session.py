@@ -76,3 +76,13 @@ class Session(BaseOperant):
         if self.experiment is not None:
             if (self.weight is not None) and (self.experiment.weight is not None):
                 return 100 * (1 - float(self.weight) / float(self.experiment.weight))
+
+
+    def to_csv(self, filename):
+
+        pd.concat([blk.data for blk in self.blocks]).to_csv(filename)
+
+
+
+
+
