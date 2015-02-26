@@ -199,7 +199,7 @@ class BirdStore(object):
 
 if __name__ == "__main__":
 
-    from pecking.bird_manager import *
+    # from pecking.bird_manager import *
     directory = "/Users/tylerlee/Dropbox/pecking_test"
     session_csv = os.path.join(directory, "Pecking data - Session Data.csv")
     fasting_csv = os.path.join(directory, "Pecking data - Fasting Data.csv")
