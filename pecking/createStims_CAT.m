@@ -20,7 +20,7 @@ else %we are on strfinator or a cluster machine
     if nargin<3
         input_dir='/auto/fhome/julie/Documents/FullVocalizationBank';
     end
-    OutDir = '/auto/fhome/tdrive/julie/StimuliPeckingTest/CallCategories/OUTSTIMS';% this line set the name of the output directory
+    OutDir = '/auto/tdrive/julie/StimuliPeckingTest/CallCategories/OUTSTIMS';% this line set the name of the output directory
 end
 
 
