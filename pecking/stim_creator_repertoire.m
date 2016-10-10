@@ -13,7 +13,9 @@ for ii=(1:6)
     II=Indices(ii);
     [Path,Voc_name] = fileparts(Stim_list(II).name);
     VocCat = Voc_name(19:20);
-    [Y,Fin,Bits] = wavread(Stim_list(II).name);
+    [Y,Fin] = audioread(Stim_list(II).name);
+    Info = audioinfo(Stim_list(II).name);
+    Bits = Info.BitsPerSample;
     if length(Y(1,:))>1
         Y = (Y(:,1) + Y(:,2))/2; %convert stereo to mono
     end
@@ -25,10 +27,12 @@ for ii=(1:6)
     FS=Fin;
 end
 Le = Fin*6 - VocLe;
-S1=round(rand*Le/5);
-S2=round(rand*Le/5);
-S3=round(rand*Le/5);
-S4=round(rand*Le/5);
+RDelay = rand([1,5]);
+RDelay = RDelay./sum(RDelay);
+S1=round(RDelay(1)*Le);
+S2=round(RDelay(2)*Le);
+S3=round(RDelay(3)*Le);
+S4=round(RDelay(4)*Le);
 S5= Le-S2-S1-S3-S4;
 IC1=zeros(S1,1);
 IC2=zeros(S2,1);

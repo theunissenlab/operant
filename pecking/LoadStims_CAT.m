@@ -12,7 +12,7 @@ Stims.sets = struct('name',{},'dir',{}, 'outdir',{},'stims',{});
 OutDir = fullfile(input_dir,'OUTSTIMS');% this line set the name of the output directory
 fiatdir(OutDir);%this line creates the output directory where prepared Go stims will be stored
 
-% Output Track
+% Output Trackfile
 TI = clock;
 file_name = sprintf('%2d%2d%2d_testVCAT_Stims.txt', TI(4), TI(5),fix(TI(6)));
 fid_out = fopen(fullfile(OutDir,file_name), 'wt');
@@ -36,6 +36,8 @@ for jj = 1:length(Folders)
         Vocals.outdir = fullfile(OutDir,Vocals.name);
         fiatdir(Vocals.outdir);
         wav_files = dir(fullfile(Vocals.dir,'*.wav'));
+        % here I should figure out how many individuals I have and how many
+        % stims per individual
         Vocals.stims = {wav_files.name};
         Stims.sets(Nb_Sets) = Vocals;
     end
@@ -68,7 +70,7 @@ for ss = (1:Nb_Sets)
             N_Stim = N_Stim + 1;
             fprintf(fid_out,'%s_Stim_%d\t%s\t%f\t%s\t%f\t%s\n', Set.name, N_Stim, Voc{1},IVI(1),Voc{2},IVI(2),Voc{3});
             Wav_outfile = fullfile(Set.outdir,sprintf('%s_Stim_%d.wav', Set.name,N_Stim));
-            wavwrite(Y,FS,Bits,Wav_outfile);
+            audiowrite(Wav_outfile,Y,FS,'BitsPerSample',Bits);
         end
     else
         N_Stim = 0;
@@ -77,7 +79,7 @@ for ss = (1:Nb_Sets)
             N_Stim = N_Stim + 1;
             fprintf(fid_out,'%s_Stim_%d\t%s\t%f\t%s\t%f\t%s\t%f\t%s\t%f\t%s\t%f\t%s\n', Set.name, N_Stim, Voc{1},IVI(1),Voc{2},IVI(2),Voc{3},IVI(3),Voc{4},IVI(4),Voc{5},IVI(5),Voc{6});
             Wav_outfile = fullfile(Set.outdir,sprintf('%s_Stim_%d.wav',Set.name,N_Stim));
-            wavwrite(Y,FS,Bits,Wav_outfile);
+            audiowrite(Wav_outfile,Y,FS,'BitsPerSample',Bits);
         end
     end
 end

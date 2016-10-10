@@ -78,7 +78,7 @@ if strcmp(call_type,'Te')
     Lindex = 0.0100/0.1806; 
 end
 
-if strcmp(call_type,'Th')
+if strcmp(call_type,'Th') || strcmp(call_type,'Tu')
     Lindex = 0.0333/0.1806;
 end
 
