@@ -1,16 +1,39 @@
-function []=createStims_CAT(input_dir)
+function []=createStims_CAT(SubjectName, TestDate, input_dir)
 if nargin<1
-    input_dir=cell(2,1);
-    input_dir{1} = '/Users/elie/Documents/ManipBerkeley/Recordings/groupRecordings/GoodQuality';
-    input_dir{2} = '/Users/elie/Documents/ManipBerkeley/Recordings/ChickRecordings/GoodQuality';
+    SubjectName = input('What is the subject name (ColColxxxxS)?\n', 's');
+end
+if nargin<2
+    TestDate = input('When will the stim be used (yyyymmdd)?\n', 's');
 end
 
-OutDir = fullfile('~/OUTSTIMS');% this line set the name of the output directory
-fiatdir(OutDir);%this line creates the output directory where prepared Go stims will be stored
+if ismac()
+    addpath(genpath('/Users/elie/Documents/CODE/operant_matlab/pecking'));
+    addpath(genpath('/Users/elie/Documents/CODE/GeneralCode'));
+    if nargin<3
+        input_dir=cell(2,1);
+        input_dir{1} = '/Users/elie/Documents/ManipBerkeley/Recordings/groupRecordings/GoodQuality';
+        input_dir{2} = '/Users/elie/Documents/ManipBerkeley/Recordings/ChickRecordings/GoodQuality';
+    end
+    OutDir = '/Users/elie/Documents/ManipBerkeley/DataPeckingTest/Categories/StimuliUsedTests/OUTSTIMS';% this line set the name of the output directory
+else %we are on strfinator or a cluster machine
+    addpath(genpath('/auto/fhome/julie/Code/operant/pecking'));
+    if nargin<3
+        input_dir='/auto/fhome/julie/Documents/FullVocalizationBank';
+    end
+    OutDir = '/auto/fhome/tdrive/julie/StimuliPeckingTest/CallCategories/OUTSTIMS';% this line set the name of the output directory
+end
+
+
+
+system(sprintf('rm -r %s\n', OutDir));%this line removes the output directory in case there was already one
+fiatdir(OutDir);%this line creates the output directory where prepared stims will be stored
 
 % Output Trackfile
 TI = clock;
-file_name = sprintf('%2d%2d%2d_testVCAT_Stims.txt', TI(4), TI(5),fix(TI(6)));
+Position = [1 5 7 10 12 14];
+AddzeroP=find(TI<10);
+file_name = sprintf('%s_%s_%4d%2d%2d_%2d%2d%2d_testVCAT_Stims.txt',SubjectName,TestDate,TI(1),TI(2),TI(3), TI(4), TI(5),fix(TI(6)));
+file_name(Position(AddzeroP))='0';
 fid_out = fopen(fullfile(OutDir,file_name), 'wt');
 if fid_out == -1
     fprintf(1, 'Error: could not open file name %s\n', file_name);
@@ -116,5 +139,12 @@ for cc=1:length(UniqCallTypeCode)
         end
     end
 end
-
+fclose(fid_out);
+% Moving the file containing the stims used to another safer place
+if ismac()
+    system(sprintf('mv %s /Users/elie/Documents/ManipBerkeley/DataPeckingTest/CallCategories/StimuliUsedTests/' ,fullfile(OutDir,file_name)))
+else
+    system(sprintf('mv %s /auto/tdrive/julie/StimuliPeckingTest/CallCategories/',fullfile(OutDir,file_name)));
+end
+    
 end
