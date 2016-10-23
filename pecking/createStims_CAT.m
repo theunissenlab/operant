@@ -31,7 +31,7 @@ fiatdir(OutDir);%this line creates the output directory where prepared stims wil
 % Output Trackfile
 TI = clock;
 file_name = sprintf('%s_%s_%4d%2d%2d_%2d%2d%2d_testVCAT_Stims.txt',SubjectName,TestDate,TI(1),TI(2),TI(3), TI(4), TI(5),fix(TI(6)));
-USPosition = strfind('_',file_name);
+USPosition = strfind(file_name,'_');
 Position = USPosition(2) + [1 5 7 10 12 14];
 AddzeroP=find(TI<10);
 file_name(Position(AddzeroP))='0';
