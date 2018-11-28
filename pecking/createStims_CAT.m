@@ -143,7 +143,7 @@ end
 fclose(fid_out);
 % Moving the file containing the stims used to another safer place
 if ismac()
-    system(sprintf('mv %s /Users/elie/Documents/ManipBerkeley/DataPeckingTest/CallCategories/StimuliUsedTests/' ,fullfile(OutDir,file_name)))
+    system(sprintf('mv %s /Users/elie/Documents/ManipBerkeley/DataPeckingTest/Categories/StimuliUsedTests/' ,fullfile(OutDir,file_name)))
 else
     system(sprintf('mv %s /auto/tdrive/julie/StimuliPeckingTest/CallCategories/',fullfile(OutDir,file_name)));
 end
