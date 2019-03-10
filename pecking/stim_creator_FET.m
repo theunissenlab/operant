@@ -43,7 +43,7 @@ for ib = 1:nBirds
         
         % Save the wave file - note that this name only works when nStims
         % >=3 and it might not make sense for > 3
-        Wav_outfile = fullfile(outputDir,sprintf('So_Stim_%d_%s_%d%d%d.wav', is, uniqueBirds{ib},indFile(1),indFile(2), indFile(3)));
+        Wav_outfile = fullfile(outputDir,sprintf('DC_Stim_%d_%s_%d%d%d.wav', is, uniqueBirds{ib},indFile(1),indFile(2), indFile(3)));
         audiowrite(Wav_outfile,Y,FS,'BitsPerSample',Bits);
     end
     
